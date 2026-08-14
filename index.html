@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>З Днем народження, Катю!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#141210;
+    --black-2:#1c1a17;
+    --gold:#cda06a;
+    --gold-light:#e8cfa3;
+    --rose:#c98a95;
+    --rose-deep:#a8646f;
+    --cream:#f4ece0;
+    --text-soft:#b9ab98;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{
+    margin:0; padding:0; min-height:100%;
+    font-family:'Montserrat', sans-serif;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(205,160,106,0.10), transparent 55%),
+      radial-gradient(ellipse at 80% 100%, rgba(201,138,149,0.10), transparent 55%),
+      var(--black);
+    color: var(--cream);
+    overflow-x:hidden;
+  }
+
+  .sparkle-layer{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .spark{
+    position:absolute; color:var(--gold); opacity:0;
+    animation: twinkle ease-in-out forwards;
+  }
+  @keyframes twinkle{
+    0%{ opacity:0; transform:scale(0.3); }
+    35%{ opacity:0.9; transform:scale(1); }
+    100%{ opacity:0; transform:scale(0.4); }
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(8vh); opacity:0; }
+    15%{ opacity:0.8; }
+    100%{ transform: translateY(-90vh); opacity:0; }
+  }
+
+  main{
+    position:relative; z-index:3;
+    min-height:100vh; width:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+    padding: 60px 20px 90px;
+  }
+
+  .eyebrow{
+    font-size:0.72rem; letter-spacing:4px; text-transform:uppercase;
+    color: var(--gold); margin-bottom:14px; opacity:0;
+    animation: fadeIn 1s ease forwards; animation-delay:.1s;
+  }
+  h1.title{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size: clamp(1.6rem, 5.5vw, 2.3rem);
+    margin: 0 0 6px;
+    text-align:center;
+    color: var(--cream);
+    letter-spacing:.5px;
+    opacity:0;
+    animation: fadeIn 1.1s ease forwards; animation-delay:.25s;
+  }
+  .name-line{
+    display:block;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size: clamp(2.6rem, 11vw, 4.2rem);
+    background: linear-gradient(100deg, var(--gold-light), var(--rose), var(--gold-light));
+    background-size: 220% auto;
+    -webkit-background-clip: text; background-clip:text; color:transparent;
+    animation: shine 6s linear infinite;
+    margin-top: 2px;
+  }
+  @keyframes shine{ to{ background-position: 220% center; } }
+
+  .subtitle{
+    text-align:center; font-size:.92rem; color:var(--text-soft);
+    max-width: 380px; margin: 18px auto 46px; line-height:1.65;
+    opacity:0;
+    animation: fadeIn 1.1s ease forwards; animation-delay:.45s;
+  }
+  @keyframes fadeIn{ to{ opacity:1; } }
+
+  /* ---------- Флип-картки побажань ---------- */
+  .cards-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    width: min(92vw, 420px);
+    opacity:0;
+    animation: fadeIn 1s ease forwards; animation-delay:.6s;
+  }
+  .flip-card{
+    perspective: 1000px;
+    height: 150px;
+  }
+  .flip-inner{
+    position:relative; width:100%; height:100%;
+    transform-style: preserve-3d;
+    transition: transform .7s cubic-bezier(.4,.2,.2,1);
+    cursor:pointer;
+  }
+  .flip-card.flipped .flip-inner{ transform: rotateY(180deg); }
+  .flip-face{
+    position:absolute; inset:0;
+    border-radius: 14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    backface-visibility: hidden;
+    padding: 14px;
+    text-align:center;
+  }
+  .flip-front{
+    background: linear-gradient(160deg, var(--black-2), #100e0c);
+    border: 1px solid rgba(205,160,106,0.35);
+  }
+  .flip-front .mono{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size: 1.6rem; color: var(--gold-light); margin-bottom:6px;
+  }
+  .flip-front .tap-hint{ font-size:.68rem; letter-spacing:1.5px; text-transform:uppercase; color: var(--text-soft); }
+  .flip-back{
+    background: linear-gradient(160deg, #2a221c, #1c1613);
+    border: 1px solid rgba(201,138,149,0.45);
+    transform: rotateY(180deg);
+  }
+  .flip-back .wish-icon{ font-size:1.3rem; margin-bottom:4px; }
+  .flip-back .wish-text{ font-size:.78rem; line-height:1.4; color: var(--cream); }
+
+  .progress{
+    font-size: .82rem;
+    color: var(--text-soft);
+    letter-spacing:.5px;
+    margin-top: 26px;
+    opacity:0;
+    animation: fadeIn 1s ease forwards; animation-delay: 1.2s;
+  }
+
+  .main-btn{
+    margin-top: 30px;
+    border:none; cursor:pointer;
+    background: linear-gradient(135deg, var(--gold), var(--rose-deep));
+    color:#1c1613; font-family:'Montserrat',sans-serif; font-weight:600;
+    font-size: 0.98rem; letter-spacing:.4px;
+    padding: 15px 32px; border-radius:50px;
+    box-shadow: 0 14px 30px rgba(205,160,106,0.28);
+    display:none;
+  }
+  .main-btn.show{ display:inline-block; animation: fadeInUp .8s ease forwards, pulseBtn 2.4s ease-in-out infinite 1s; }
+  @keyframes fadeInUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes pulseBtn{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.04); } }
+
+  /* ---------- Подарункова коробка ---------- */
+  .gift-section{
+    margin-top: 10px;
+    opacity:0; max-height:0; overflow:hidden;
+    transition: opacity .8s ease .1s, max-height .8s ease;
+  }
+  .gift-section.visible{ opacity:1; max-height:1400px; overflow:visible; }
+
+  .box-stage{
+    position:relative;
+    width: min(66vw, 250px);
+    height: min(66vw, 250px);
+    margin: 10px auto 0;
+    cursor:pointer;
+  }
+  .box-svg{ display:block; width:100%; height:100%; overflow:visible; }
+  .box-lid-group{ transform-origin: 34px 92px; transition: transform 1s cubic-bezier(.4,0,.2,1); }
+  .box-stage.open .box-lid-group{ transform: rotateX(-120deg); }
+  .box-sparkle{ opacity:0; transform: scale(0.6); transition: opacity .5s ease .2s, transform .5s ease .2s; }
+  .box-stage.open .box-sparkle{ opacity:1; transform: scale(1); }
+
+  .cert-emerge{
+    position:absolute; left:50%; bottom:8%;
+    width: 84%;
+    transform: translate(-50%, 20%) scale(0.9);
+    border-radius: 10px;
+    z-index:3;
+    opacity:0;
+    transition: transform 1.1s cubic-bezier(.2,.85,.3,1) .4s, opacity .6s ease .4s;
+    background: linear-gradient(160deg, #fdf8ef, #f1e6d2);
+    box-shadow: 0 20px 44px rgba(0,0,0,0.4);
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .box-stage.open .cert-emerge{ transform: translate(-50%, -20%) scale(1.05); opacity:1; }
+
+  .cert-hint{
+    text-align:center; font-size:.82rem; color:var(--text-soft);
+    margin-top: 26px; letter-spacing:.3px;
+    transition: opacity .4s ease;
+  }
+  .box-stage.open ~ .cert-hint{ opacity:0; }
+
+  /* ---------- Сертифікат ---------- */
+  .certificate{
+    padding: 22px 18px 18px;
+    text-align:center;
+    color:#4a3d2c;
+  }
+  .cert-brand{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size: 1.05rem; color: var(--rose-deep); margin-bottom:2px; letter-spacing:.5px;
+  }
+  .cert-line{ width:36px; height:2px; background:var(--gold); margin: 6px auto 12px; }
+  .cert-title{
+    font-family:'Playfair Display', serif; font-weight:700;
+    font-size: 0.98rem; letter-spacing:1.8px; text-transform:uppercase;
+    color:#2c2418; margin: 0 0 10px;
+  }
+  .cert-for{ font-size:.76rem; color:#7a6b53; margin-bottom:2px; }
+  .cert-name{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:1.05rem; color:#2c2418; margin-bottom:14px;
+  }
+  .cert-service-label{ font-size:.72rem; color:#7a6b53; }
+  .cert-service{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:0.95rem; color: var(--rose-deep); margin: 4px 0 14px;
+  }
+  .cert-footer{ font-size:.66rem; color:#8a7c62; letter-spacing:.4px; }
+
+  /* ---------- Форма email ---------- */
+  .claim-section{
+    width: min(92vw, 400px);
+    margin-top: 44px;
+    text-align:center;
+  }
+  .claim-title{
+    font-family:'Playfair Display', serif;
+    font-size:1.15rem; color: var(--cream); margin: 0 0 8px; font-weight:600;
+  }
+  .claim-sub{ font-size:.85rem; color:var(--text-soft); margin:0 0 20px; line-height:1.55; }
+  .claim-form{ display:flex; flex-direction:column; gap:12px; }
+  .claim-form input{
+    width:100%; padding: 14px 18px; border-radius: 50px;
+    border: 1.5px solid rgba(205,160,106,0.4);
+    background: var(--black-2);
+    font-family:'Montserrat', sans-serif; font-size: 0.92rem; color: var(--cream);
+    outline:none;
+    transition: border-color .25s ease, box-shadow .25s ease;
+  }
+  .claim-form input::placeholder{ color: var(--text-soft); }
+  .claim-form input:focus{ border-color: var(--gold); box-shadow: 0 0 0 3px rgba(205,160,106,0.15); }
+  .claim-form button{
+    border:none; cursor:pointer;
+    background: linear-gradient(135deg, var(--gold), var(--rose-deep));
+    color:#1c1613; font-family:'Montserrat',sans-serif; font-weight:600;
+    font-size:0.95rem; letter-spacing:.3px;
+    padding: 15px 30px; border-radius:50px;
+    box-shadow: 0 12px 26px rgba(205,160,106,0.25);
+    transition: transform .2s ease;
+  }
+  .claim-form button:active{ transform: scale(0.97); }
+  .claim-error{ font-size:.8rem; color:#e08a7d; min-height:1.1em; margin-top:-2px; }
+
+  .success-box{
+    display:none; padding: 24px 20px; border-radius: 16px;
+    background: linear-gradient(160deg, var(--black-2), #17130f);
+    border: 1px solid rgba(205,160,106,0.35);
+  }
+  .success-box.show{ display:block; animation: fadeIn .7s ease; }
+  .success-icon{ font-size:2rem; margin-bottom:8px; display:block; }
+  .success-title{ font-family:'Playfair Display', serif; font-size:1.1rem; color: var(--gold-light); margin:0 0 8px; font-weight:600; }
+  .success-text{ font-size:.85rem; color:var(--text-soft); line-height:1.6; margin:0; }
+
+  .brand-footer{
+    margin-top: 54px;
+    font-size: 0.72rem;
+    color: var(--text-soft);
+    letter-spacing: 1px;
+    opacity:0;
+    animation: fadeIn 1s ease forwards; animation-delay: .8s;
+    text-align:center;
+  }
+
+  @media (min-width:900px){
+    main{ padding-top:80px; max-width:680px; margin:0 auto; }
+    .title{ font-size: 2.2rem; }
+    .subtitle{ font-size:1.02rem; max-width:440px; }
+    .cards-grid{ width:520px; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    .flip-card{ height:170px; }
+    .box-stage{ width:300px; height:300px; }
+    .claim-section{ width:440px; }
+  }
+</style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<div class="sparkle-layer" id="sparkleLayer"></div>
+
+<main>
+  <div class="eyebrow">Для чарівної бізнес-леді</div>
+  <h1 class="title">З Днем народження<span class="name-line">Катю!</span></h1>
+  <p class="subtitle">Торкнись кожної картки, щоб відкрити маленьке побажання — а наприкінці на тебе чекає справжній подарунок</p>
+
+  <div class="cards-grid" id="cardsGrid">
+    <div class="flip-card" data-key="gratitude">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="mono">01</div><div class="tap-hint">Торкнись</div></div>
+        <div class="flip-face flip-back"><span class="wish-icon">✦</span><span class="wish-text">Дякуємо, що своєю майстерністю щодня даруєш людям впевненість і гарний настрій.</span></div>
+      </div>
+    </div>
+    <div class="flip-card" data-key="strength">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="mono">02</div><div class="tap-hint">Торкнись</div></div>
+        <div class="flip-face flip-back"><span class="wish-icon">✦</span><span class="wish-text">Хай сил вистачає на все, а втома минає легко і швидко.</span></div>
+      </div>
+    </div>
+    <div class="flip-card" data-key="beauty">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="mono">03</div><div class="tap-hint">Торкнись</div></div>
+        <div class="flip-face flip-back"><span class="wish-icon">✦</span><span class="wish-text">Ти створюєш красу для інших — хай і у твоєму житті її буде більше.</span></div>
+      </div>
+    </div>
+    <div class="flip-card" data-key="calm">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="mono">04</div><div class="tap-hint">Торкнись</div></div>
+        <div class="flip-face flip-back"><span class="wish-icon">✦</span><span class="wish-text">Нехай буде більше часу й на власний спокій та відпочинок.</span></div>
+      </div>
+    </div>
+    <div class="flip-card" data-key="joy">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="mono">05</div><div class="tap-hint">Торкнись</div></div>
+        <div class="flip-face flip-back"><span class="wish-icon">✦</span><span class="wish-text">Хай кожен день приносить привід для щирої усмішки.</span></div>
+      </div>
+    </div>
+    <div class="flip-card" data-key="success">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="mono">06</div><div class="tap-hint">Торкнись</div></div>
+        <div class="flip-face flip-back"><span class="wish-icon">✦</span><span class="wish-text">Нехай усе, за що берешся, приносить результат і задоволення.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress" id="progressText">Відкрито: 0 / 6</div>
+  <button class="main-btn" id="mainBtn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:-3px; margin-right:6px;">
+      <rect x="3" y="10" width="18" height="10" rx="1.5" fill="#1c1613"/>
+      <rect x="3" y="7" width="18" height="4" rx="1" fill="#1c1613"/>
+      <rect x="11" y="7" width="2" height="13" fill="#e8cfa3"/>
+      <path d="M12 7C9 2 5 3 5 5.5C5 7.5 9 7.5 12 7Z" fill="#e8cfa3"/>
+      <path d="M12 7C15 2 19 3 19 5.5C19 7.5 15 7.5 12 7Z" fill="#c98a95"/>
+    </svg>
+    Відкрити подарунок
+  </button>
+
+  <section class="gift-section" id="giftSection">
+    <div class="box-stage" id="boxStage" role="button" tabindex="0" aria-label="Відкрити подарункову коробку">
+      <div class="cert-emerge">
+        <div class="certificate">
+          <div class="cert-brand">Подарунок для тебе</div>
+          <div class="cert-line"></div>
+          <div class="cert-title">Подарунковий сертифікат</div>
+          <div class="cert-for">для</div>
+          <div class="cert-name">Катерини</div>
+          <div class="cert-service-label">на</div>
+          <div class="cert-service">Косметику для краси та догляду</div>
+          <div class="cert-footer">З любов'ю від дівчат FoodPOINT</div>
+        </div>
+      </div>
+      <svg class="box-svg" viewBox="0 0 220 220" fill="none">
+        <g class="box-sparkle">
+          <circle cx="38" cy="28" r="4" fill="#e8cfa3"/>
+          <circle cx="182" cy="22" r="3.5" fill="#c98a95"/>
+          <circle cx="196" cy="66" r="3" fill="#cda06a"/>
+          <circle cx="18" cy="76" r="3" fill="#e8cfa3"/>
+        </g>
+        <rect x="24" y="92" width="172" height="104" rx="8" fill="#221c17" stroke="#cda06a" stroke-opacity="0.4"/>
+        <rect x="24" y="92" width="172" height="104" rx="8" fill="url(#boxShade)"/>
+        <rect x="102" y="92" width="16" height="104" fill="#171310"/>
+        <g class="box-lid-group">
+          <rect x="16" y="70" width="188" height="30" rx="6" fill="#2a231c" stroke="#cda06a" stroke-opacity="0.45"/>
+          <rect x="94" y="70" width="32" height="30" fill="#1c1712"/>
+          <path d="M110 70 C92 44 74 44 64 60 C57 72 74 74 92 70 Z" fill="#e8cfa3"/>
+          <path d="M110 70 C128 44 146 44 156 60 C163 72 146 74 128 70 Z" fill="#c98a95"/>
+          <circle cx="110" cy="68" r="7" fill="#cda06a"/>
+        </g>
+        <defs>
+          <linearGradient id="boxShade" x1="24" y1="92" x2="196" y2="196" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ffffff" stop-opacity="0.06"/>
+            <stop offset="1" stop-color="#000000" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <p class="cert-hint">Натисни на коробку, щоб відкрити</p>
+
+    <div class="claim-section" id="claimSection">
+      <h2 class="claim-title">Отримати сертифікат на пошту</h2>
+      <p class="claim-sub">Твій подарунок уже чекає на тебе</p>
+      <form class="claim-form" id="claimForm">
+        <input type="email" id="emailInput" placeholder="Твій email" required autocomplete="email" inputmode="email">
+        <div class="claim-error" id="claimError"></div>
+        <button type="submit">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" style="vertical-align:-1px; margin-right:6px;">
+            <rect x="1" y="1" width="14" height="10" rx="1.5" fill="#1c1613" stroke="#1c1613"/>
+            <path d="M1.5 1.5L8 7L14.5 1.5" stroke="#e8cfa3" stroke-width="1.2" fill="none"/>
+          </svg>
+          Отримати сертифікат
+        </button>
+      </form>
+      <div class="success-box" id="successBox">
+        <span class="success-icon">✦</span>
+        <h3 class="success-title">Дякуємо!</h3>
+        <p class="success-text" id="successText"></p>
+      </div>
+    </div>
+  </section>
+
+  <p class="brand-footer">З любов'ю від дівчат FoodPOINT</p>
+</main>
+
+<script>
+const flipCards = document.querySelectorAll('.flip-card');
+const progressText = document.getElementById('progressText');
+const mainBtn = document.getElementById('mainBtn');
+const cardsGrid = document.getElementById('cardsGrid');
+const giftSection = document.getElementById('giftSection');
+const sparkleLayer = document.getElementById('sparkleLayer');
+
+let openedCount = 0;
+const openedSet = new Set();
+
+flipCards.forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('flipped');
+    const key = card.dataset.key;
+    if(!openedSet.has(key) && card.classList.contains('flipped')){
+      openedSet.add(key);
+      openedCount++;
+      progressText.textContent = `Відкрито: ${openedCount} / 6`;
+      spawnSparkle(card);
+      if(openedCount === 6){
+        progressText.textContent = 'Усі картки відкрито ✦';
+        mainBtn.classList.add('show');
+      }
+    }
+  });
+});
+
+function spawnSparkle(fromEl){
+  const rect = fromEl.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top + rect.height/2;
+  for(let i=0;i<6;i++){
+    const s = document.createElement('div');
+    s.className = 'spark';
+    s.textContent = '✦';
+    s.style.left = (cx + (Math.random()*50-25)) + 'px';
+    s.style.top = cy + 'px';
+    s.style.fontSize = (8 + Math.random()*8) + 'px';
+    s.style.animation = `floatUp ${1.6 + Math.random()*1}s ease-out forwards`;
+    sparkleLayer.appendChild(s);
+    setTimeout(()=>s.remove(), 3000);
+  }
+}
+
+mainBtn.addEventListener('click', () => {
+  cardsGrid.style.display = 'none';
+  mainBtn.style.display = 'none';
+  progressText.style.display = 'none';
+  giftSection.classList.add('visible');
+  giftSection.scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+const boxStage = document.getElementById('boxStage');
+function openBox(){
+  if(boxStage.classList.contains('open')) return;
+  boxStage.classList.add('open');
+}
+boxStage.addEventListener('click', openBox);
+boxStage.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openBox(); } });
+
+const claimForm = document.getElementById('claimForm');
+const emailInput = document.getElementById('emailInput');
+const claimError = document.getElementById('claimError');
+const successBox = document.getElementById('successBox');
+const successText = document.getElementById('successText');
+
+const EMAILJS_PUBLIC_KEY = 'VYGIM2VC1peni4Uoj';
+const EMAILJS_SERVICE_ID = 'service_bn13bso';
+const EMAILJS_TEMPLATE_ID = 'ВПИШИ_СЮДИ_НОВИЙ_TEMPLATE_ID';
+
+if(window.emailjs){
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+}
+
+function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+claimForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = emailInput.value.trim();
+  claimError.textContent = '';
+  if(!isValidEmail(email)){
+    claimError.textContent = 'Введи, будь ласка, коректну електронну адресу';
+    return;
+  }
+
+  const submitBtn = claimForm.querySelector('button');
+  submitBtn.disabled = true;
+
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    to_email: email,
+    certificate_link: 'https://drive.google.com/file/d/1xXA0NLrnnLcxbMcbxbFUGEoGDdt2ukWp/view?usp=sharing'
+  }).then(function(){
+    claimForm.style.display = 'none';
+    successText.textContent = `Сертифікат надіслано на ${email}. Перевір пошту (і "Спам" теж).`;
+    successBox.classList.add('show');
+  }).catch(function(err){
+    submitBtn.disabled = false;
+    claimError.textContent = 'Не вдалося надіслати лист. Спробуй ще раз.';
+    console.error('EmailJS error:', err);
+  });
+});
+</script>
+
+</body>
+</html>
