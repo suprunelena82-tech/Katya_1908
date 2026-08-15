@@ -298,6 +298,9 @@
 </head>
 <body>
 
+<audio id="sfxWhoosh" src="whoosh.wav" preload="auto"></audio>
+<audio id="giftMusic" src="happy-birthday.mp3" loop preload="auto"></audio>
+
 <div class="sparkle-layer" id="sparkleLayer"></div>
 
 <main>
@@ -432,10 +435,21 @@ const sparkleLayer = document.getElementById('sparkleLayer');
 
 let openedCount = 0;
 const openedSet = new Set();
+const sfxWhoosh = document.getElementById('sfxWhoosh');
+const giftMusic = document.getElementById('giftMusic');
+
+function playWhoosh(){
+  /* клонуємо, щоб швидкі кліки не обривали одне одного */
+  const clone = sfxWhoosh.cloneNode(true);
+  clone.volume = 0.6;
+  clone.play().catch(()=>{});
+  clone.addEventListener('ended', () => clone.remove());
+}
 
 flipCards.forEach(card => {
   card.addEventListener('click', () => {
     card.classList.toggle('flipped');
+    playWhoosh();
     const key = card.dataset.key;
     if(!openedSet.has(key) && card.classList.contains('flipped')){
       openedSet.add(key);
@@ -479,6 +493,12 @@ const boxStage = document.getElementById('boxStage');
 function openBox(){
   if(boxStage.classList.contains('open')) return;
   boxStage.classList.add('open');
+  /* На всяк випадок глушимо звук пелюсток/карток, щоб нічого не накладалось одне на одне */
+  sfxWhoosh.pause();
+  sfxWhoosh.currentTime = 0;
+  giftMusic.currentTime = 0;
+  giftMusic.volume = 0.7;
+  giftMusic.play().catch(()=>{});
 }
 boxStage.addEventListener('click', openBox);
 boxStage.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openBox(); } });
